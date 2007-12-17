@@ -14,7 +14,6 @@ Source0:	%{name}-%{version}.tar.bz2
 Group:		System/Libraries
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 This library parses MIME Directory Profile which is defined in RFC 2425.
