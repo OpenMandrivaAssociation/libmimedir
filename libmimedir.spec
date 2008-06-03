@@ -1,6 +1,6 @@
 %define	name	libmimedir
 %define	version	0.5
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	major	0
 %define libname	%mklibname mimedir %{major}
 
@@ -52,6 +52,8 @@ export CFLAGS="%{optflags} -fPIC"
 
 # %make doesn't work
 make
+# Fix incorrect libdir in .la file on x86-64 - AdamW 2008/06
+sed -i -e 's,/usr/lib,%{_libdir},g' libmimedir.la
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
