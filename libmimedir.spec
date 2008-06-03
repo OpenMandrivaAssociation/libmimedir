@@ -1,16 +1,16 @@
-%define	name	libmimedir
-%define	version	0.5
-%define	release	%mkrel 2
-%define	major	0
-%define libname	%mklibname mimedir %{major}
+%define	major		0
+%define libname		%mklibname mimedir %{major}
+%define develname	%mklibname mimedir -d
 
 Summary:	MIME Directory Profile library
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		libmimedir
+Version:	0.5
+Release:	%{mkrel 3}
 URL:		http://sourceforge.net/projects/libmimedir/
 License:	BSD
-Source0:	%{name}-%{version}.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+# Fixes definition of libdir in libmimedir.la - AdamW 2008/06
+Patch0:		libmimedir-0.5-libdir.patch
 Group:		System/Libraries
 BuildRequires:	bison
 BuildRequires:	flex
@@ -22,44 +22,34 @@ This library parses MIME Directory Profile which is defined in RFC 2425.
 %package -n	%{libname}
 Summary:	MIME Directory Profile library
 Group:          System/Libraries
-Obsoletes:	%{name} < %{version}-%{release}
-Provides:	%{libname} = %{version}-%{release}
 
 %description -n	%{libname}
 This library parses MIME Directory Profile which is defined in RFC 2425.
 
-%package -n	%{libname}-devel
-Summary:	Development library and header files for the %{name} library
+%package -n	%{develname}
+Summary:	Development library and headers for the %{name} library
 Group:		Development/C
-Obsoletes:	%{name}-devel < %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
+Obsoletes:	%{mklibname mimedir 0 -d}
+Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 This library parses MIME Directory Profile which is defined in RFC 2425.
 
 %prep
-
 %setup -q -n %{name}-%{version}
-
+%patch0 -p1 -b .libdir
 perl -pi -e 's/444/644/g' Makefile.in
 
 %build
 export CFLAGS="%{optflags} -fPIC"
-
 %configure2_5x
-
 # %make doesn't work
 make
-# Fix incorrect libdir in .la file on x86-64 - AdamW 2008/06
-sed -i -e 's,/usr/lib,%{_libdir},g' libmimedir.la
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 mkdir -p %buildroot{%_libdir,%_includedir}
-
 %makeinstall
 
 %clean
@@ -74,7 +64,7 @@ mkdir -p %buildroot{%_libdir,%_includedir}
 %doc COPYING ChangeLog README
 %{_libdir}/*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc COPYING ChangeLog README
 %{_includedir}/*
