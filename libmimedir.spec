@@ -5,7 +5,7 @@
 Summary:	MIME Directory Profile library
 Name:		libmimedir
 Version:	0.5
-Release:	%{mkrel 3}
+Release:	%{mkrel 4}
 URL:		http://sourceforge.net/projects/libmimedir/
 License:	BSD
 Source0:	http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
