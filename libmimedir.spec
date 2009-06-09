@@ -4,13 +4,11 @@
 
 Summary:	MIME Directory Profile library
 Name:		libmimedir
-Version:	0.5
-Release:	%{mkrel 4}
+Version:	0.5.1
+Release:	%mkrel 1
 URL:		http://sourceforge.net/projects/libmimedir/
 License:	BSD
-Source0:	http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
-# Fixes definition of libdir in libmimedir.la - AdamW 2008/06
-Patch0:		libmimedir-0.5-libdir.patch
+Source0:	http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Group:		System/Libraries
 BuildRequires:	bison
 BuildRequires:	flex
@@ -38,7 +36,6 @@ This library parses MIME Directory Profile which is defined in RFC 2425.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .libdir
 perl -pi -e 's/444/644/g' Makefile.in
 
 %build
