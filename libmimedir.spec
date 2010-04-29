@@ -5,7 +5,7 @@
 Summary:	MIME Directory Profile library
 Name:		libmimedir
 Version:	0.5.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 URL:		http://sourceforge.net/projects/libmimedir/
 License:	BSD
 Source0:	http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -48,6 +48,8 @@ make
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p %buildroot{%_libdir,%_includedir}
 %makeinstall
+
+find %buildroot -name *.so* -exec chmod 755 {} \;
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
